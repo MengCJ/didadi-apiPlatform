@@ -11,18 +11,18 @@ let originPush = Router.prototype.push;
 let originReplace = Router.prototype.replace;
 
 Router.prototype.push = function (location, resolve, reject) {
-    if (resolve && reject) {
-        originPush.call(this, location, resolve, reject);
-    } else {
-        originPush.call(this, location, () => { }, () => { })
-    }
+  if (resolve && reject) {
+    originPush.call(this, location, resolve, reject);
+  } else {
+    originPush.call(this, location, () => { }, () => { })
+  }
 }
 Router.prototype.replace = function (location, resolve, reject) {
-    if (resolve && reject) {
-        originReplace.call(this, location, resolve, reject);
-    } else {
-        originReplace.call(this, location, () => { }, () => { })
-    }
+  if (resolve && reject) {
+    originReplace.call(this, location, resolve, reject);
+  } else {
+    originReplace.call(this, location, () => { }, () => { })
+  }
 }
 
 /* Layout 组件*/
@@ -65,16 +65,25 @@ export const constantRoutes = [
     hidden: true
   },
 
+
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '介绍', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '主页', icon: 'dashboard' }
+      },
+      {
+        path: '/detail',
+        name: 'detail',
+        component: () => import('@/layout/components/detail/index'),
+        hidden: true
+      },
+    ]
   },
 
   {
@@ -106,9 +115,9 @@ export const constantRoutes = [
       }
     ]
   },
- 
 
-  
+
+
 
 
 

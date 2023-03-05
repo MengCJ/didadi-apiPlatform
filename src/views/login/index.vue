@@ -132,6 +132,10 @@ export default {
     async handleLogin() {
       const reuslt = await this.$store.dispatch("user/logins", this.loginForm);
       if (reuslt === "ok") {
+        this.$message({
+          message: '登录成功',
+          type: 'success'
+        });
         this.$router.push({ path: this.redirect || "/" });
       }
     },

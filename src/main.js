@@ -11,9 +11,11 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
-
+import * as Api  from '@/api/home'
 import '@/icons' // icon
 import '@/permission' // permission control
+import '@/assets/iconfont/font.css'
+import HintButton from '@/components/HintButton'
 
 /**
  * If you don't want to use mock-server
@@ -29,15 +31,21 @@ import '@/permission' // permission control
 // }
 
 // set ElementUI lang to EN
-Vue.use(ElementUI, { locale })
+// Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
-// Vue.use(ElementUI)
+Vue.component(HintButton.name,HintButton)
+Vue.use(ElementUI)
+
 
 Vue.config.productionTip = false
+
 
 new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate(){
+    Vue.prototype.$Api = Api
+  }
 })

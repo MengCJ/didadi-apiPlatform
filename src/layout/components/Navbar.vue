@@ -9,6 +9,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+        <!-- <span class="name">1111</span> -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
@@ -84,7 +85,13 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
-
+    // .name{
+    //   width: 30px;
+    //   display: inline-block;
+    //   background-color: red;
+    //   height: 100%;
+    // line-height: 50px;
+    // }
     &:focus {
       outline: none;
     }

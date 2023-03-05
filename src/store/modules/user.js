@@ -7,7 +7,6 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    userInfo:{}
   }
 }
 
@@ -26,16 +25,14 @@ const mutations = {
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
-  SET_USERINFO :(state,userinfo)=>{
-    state.userInfo = userinfo
-  }
+ 
 }
 
 const actions = {
   // user login
   async logins({ commit }, userInfo) {
     const { username, password } = userInfo
-    const res = await login({ userAccount: username.trim(), userPassword: password })
+    const res = await login(username.trim(),  password)
     if (res.code == 20000) {
       // 保存用户 信息
       commit('SET_USERINFO',userInfo)
@@ -49,10 +46,9 @@ const actions = {
 
   // get user info
   getInfo({ commit, state }) {
-   const {username,password} = state.userInfo
     return new Promise((resolve, reject) => {
       
-      getuserinfo({ userAccount: username.trim(), userPassword: password }).then(response => {
+      getuserinfo().then(response => {
         const { data } = response
         if (!data) {
           return reject('Verification failed, please Login again.')

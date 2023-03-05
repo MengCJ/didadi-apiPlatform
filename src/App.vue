@@ -9,3 +9,9 @@ export default {
   name: 'App'
 }
 </script>
+
+<style>
+  *{
+    list-style: none;
+  }
+</style>
