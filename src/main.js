@@ -16,6 +16,28 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import '@/assets/iconfont/font.css'
 import HintButton from '@/components/HintButton'
+import JsonViewer from 'vue-json-viewer'
+//  引入xml的格式化
+import vkbeautify from 'vkbeautify';
+// 引入xml的高亮
+import hljs from 'highlight.js'
+//样式文件，可选择node_modules-highlight.js-styles文件夹里其他高亮样式css
+import 'highlight.js/styles/atom-one-dark.css'
+ 
+ 
+Vue.directive('highlight',function(el){  //自定义指令
+    let blocks = el.querySelectorAll('pre code');
+    blocks.forEach((block)=>{
+        hljs.highlightBlock(block)
+    })
+})
+
+// 以插件的形式引入
+Vue.use(JsonViewer)
+// 或者注册组件
+// components: {JsonViewer}
+
+
 
 /**
  * If you don't want to use mock-server
@@ -37,6 +59,8 @@ Vue.component(HintButton.name,HintButton)
 Vue.use(ElementUI)
 
 
+
+
 Vue.config.productionTip = false
 
 
@@ -46,6 +70,8 @@ new Vue({
   store,
   render: h => h(App),
   beforeCreate(){
-    Vue.prototype.$Api = Api
+    Vue.prototype.$Api = Api,
+    Vue.prototype.$vkbeautify = vkbeautify;
+
   }
 })

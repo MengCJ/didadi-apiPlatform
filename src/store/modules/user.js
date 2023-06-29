@@ -7,6 +7,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
+    id: ''
   }
 }
 
@@ -25,17 +26,20 @@ const mutations = {
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
- 
+
+  SET_ID: (state, id) => {
+    state.id = id;
+  }
 }
 
 const actions = {
   // user login
   async logins({ commit }, userInfo) {
     const { username, password } = userInfo
-    const res = await login(username.trim(),  password)
+    const res = await login({ userAccount: username.trim(), userPassword: password })
     if (res.code == 20000) {
       // 保存用户 信息
-      commit('SET_USERINFO',userInfo)
+      commit('SET_USERINFO', userInfo)
       commit('SET_TOKEN', res.data)
       setToken(res.data)
       return 'ok'
@@ -47,16 +51,16 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      
+
       getuserinfo().then(response => {
         const { data } = response
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
-        const { userName, userAvatar } = data
-
+        const { userName, userAvatar, id } = data
         commit('SET_NAME', userName)
         commit('SET_AVATAR', userAvatar)
+        commit('SET_ID', id)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -67,7 +71,7 @@ const actions = {
   // user logout
   async logout({ commit, state }) {
     const result = await logout();
-    if(result.code=='20000'){
+    if (result.code == '20000') {
       removeToken() // must remove  token  first
       resetRouter()
       commit('RESET_STATE')

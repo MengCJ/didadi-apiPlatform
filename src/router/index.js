@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { getToken } from '@/utils/auth'
+
 
 Vue.use(Router)
 
@@ -66,6 +68,14 @@ export const constantRoutes = [
   },
 
 
+  
+
+  // 404 page must be placed at the end !!!
+  // { path: '*', redirect: '/404', hidden: true }
+]
+
+// 动态路由
+export  const asyncRoutes = [
   {
     path: '/',
     component: Layout,
@@ -78,7 +88,7 @@ export const constantRoutes = [
         meta: { title: '主页', icon: 'dashboard' }
       },
       {
-        path: '/detail',
+        path: 'detail',
         name: 'detail',
         component: () => import('@/layout/components/detail/index'),
         hidden: true
@@ -90,41 +100,38 @@ export const constantRoutes = [
     path: '/manger',
     component: Layout,
     name: 'Manger',
-    meta: { title: '管理员', icon: 'el-icon-s-help' },
+    meta: { title: '教程', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'manger',
         name: 'manger',
         component: () => import('@/views/manger/index'),
-        meta: { title: '管理页', icon: 'el-icon-document-copy' },
+        meta: { title: '使用教程', icon: 'el-icon-document-copy' },
       },
     ]
   },
   {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '查询表格', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '查询表格', icon: 'table' }
-      }
-    ]
-  },
+  path: '/example',
+  component: () => import('@/layout'),
+  // redirect: '/example/table',
+  name: 'Example',
+  meta: { title: '管理员', icon: 'el-icon-s-help' },
+  children: [
+    {
+      path: 'table',
+      name: 'Table',
+      component: () => import('@/views/table/index'),
+      meta: { title: '查询表格', icon: 'table' }
+    },
+    {
+      path: 'from',
+      name: 'From',
+      component: () => import('@/views/form/index'),
+      meta: { title: '查询图表', icon: 'el-icon-s-data' }
+    },
 
-
-
-
-
-
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+  ]
+},];
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
@@ -139,5 +146,4 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-
 export default router

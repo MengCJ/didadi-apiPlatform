@@ -1,8 +1,8 @@
 <template>
   <div class="dashboard-container">
-    <h1 class="tilie"><i class="el-icon-menu"></i> 滴滴滴滴滴 - 开放API</h1>
+    <h1 class="tilie"><i class="el-icon-menu"></i> 滴答滴 - 开放API</h1>
     <ul class="jiekou-list">
-      <li v-for="pages in pageList" :key="pages.id">
+      <li v-for="(pages, index) in pageList" :key="index">
         <div class="left">
           <div class="left_one">
             <el-button type="primary">{{ pages.method }}</el-button>
@@ -15,44 +15,33 @@
         </div>
       </li>
     </ul>
-    <!--  @size-change="handleSizeChange"
-        @current-change="handleCurrentChange" -->
-    <!-- <div class="block">
-      <el-pagination
-        :current-page.sync="currentPage"
-        :page-size="pagesize"
-        layout="prev, pager, next, jumper"
-        :total="total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        align="center"
-        background
-      >
-      </el-pagination>
-    </div> -->
+
     <el-card>
       <div class="paging">
         <el-pagination
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
+          :page-sizes="[3, 5, 7]"
           :page-size="100"
           layout="total, sizes "
-          :total="400"
+          :total="total"
         />
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
           layout="prev, pager, next,jumper"
-          :total="400"
-          background
+          :total="total"
+          background=""
         />
       </div>
     </el-card>
+    <div class="author">
+      <div class="authorname">Author: <span>didididi | dadadada</span></div>
+      <div class="beian">
+        滴答滴API开放平台 <span>| 桂ICP备2023001955号</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -63,7 +52,7 @@ export default {
     return {
       currentPage: 1,
       pagesize: 5,
-      total: 50,
+      total: 0,
       pageList: [],
     };
   },
@@ -74,11 +63,14 @@ export default {
         pageSize: this.pagesize,
       });
       if (res.code == "20000") {
+        this.total = res.data.total;
         this.pageList = res.data.records;
       }
     },
-    handleSizeChange() {
-      console.log("11");
+    handleSizeChange(e) {
+      this.pagesize = e;
+      this.currentPage = 1;
+      this.getpage();
     },
     handleCurrentChange(e) {
       this.currentPage = e;
@@ -139,9 +131,10 @@ export default {
             margin: 0px;
             line-height: 45px;
             margin-left: 10px;
-            font-size: 22px;
+            font-size: 18px;
             float: left;
-            font-family: "W01";
+            // font-weight: bold;
+            // font-family: "W01";
           }
         }
 
@@ -162,6 +155,34 @@ export default {
           font-size: 18px;
         }
       }
+    }
+  }
+}
+.author {
+  
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+  margin-top: 20px;
+  float: right;
+  // -moz-user-select: none; /* Firefox私有属性 */
+  // -webkit-user-select: none; /* WebKit内核私有属性 */
+  // -khtml-user-select: none; /* KHTML内核私有属性 */
+  user-select: none; /* CSS3属性 */
+  .authorname {
+    font-family: "W04";
+
+    span {
+      font-family: "W03";
+    }
+  }
+  .beian {
+    font-family: "w04";
+    span {
+      font-family: "W03";
     }
   }
 }

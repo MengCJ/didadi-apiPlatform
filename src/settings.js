@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '滴答滴API开放平台',
 
   /**
    * @type {boolean} true | false
